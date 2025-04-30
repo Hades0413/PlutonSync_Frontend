@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+:root {
+  --pluton-primary: #1c0553;
+  --pluton-secondary: #040406;
+  --pluton-background: #0c0c0c;
+  --pluton-text: #fff;
+  --pluton-border: #d1d5db;
+}
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  background-color: var(--pluton-background);
+}

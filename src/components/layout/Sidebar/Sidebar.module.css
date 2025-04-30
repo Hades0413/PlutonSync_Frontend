@@ -1,0 +1,14 @@
+/* Sidebar.module.css */
+.logo {
+  transition: all 0.3s ease;
+  filter: saturate(1.5);
+  margin-top: 15px;
+}
+
+.logoSmall {
+  width: 3rem; /* 40px */
+}
+
+.logoLarge {
+  width: 3rem; /* 128px */
+}
