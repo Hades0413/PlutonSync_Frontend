@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User, Mail, Lock, UserCircle } from "lucide-react";
-import { registerUser } from "../../../../api/auth/authApi";
+import { registerUser } from "../../../../api/user/userApi";
 import {
   RegisterFormData,
   RegisterResponse,
