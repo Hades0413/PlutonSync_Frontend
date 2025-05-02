@@ -11,6 +11,7 @@ import Layout from "./components/layout/Layout";
 import Proyectos from "./pages/proyectos/Proyectos";
 import Finanzas from "./pages/finanzas/Finanzas";
 import Tareas from "./pages/tareas/Tareas";
+import Profile from "./pages/profile/Profile";
 
 // Desactiva los logs en modo desarrollo
 /*
@@ -58,6 +59,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Tareas />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/perfil"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />

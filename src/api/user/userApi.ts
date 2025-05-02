@@ -1,4 +1,6 @@
-import { REGISTER_URL } from "../urls";
+import { REGISTER_URL, USER_LIST_ID } from "../urls";
+import { Request, Response } from "express"; // Asegúrate de importar estos tipos si estás utilizando Express
+
 // Función para registrar un usuario
 export async function registerUser(
   username: string,
@@ -36,6 +38,46 @@ export async function registerUser(
   }
 }
 
+// Función para obtener datos del usuario por id
+export async function getUserById(req: Request, res: Response) {
+  const { id } = req.params; // Obtenemos el id desde la URL
+
+  try {
+    const response = await fetch(`${USER_LIST_ID}/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al obtener los datos del usuario");
+    }
+
+    const data = await response.json();
+
+    res.json({
+      success: true,
+      user: data.user,
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      // Ahora utilizamos 'error' para enviar el mensaje específico
+      res.status(500).json({
+        success: false,
+        message: error.message || "Error desconocido",
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: "Error desconocido",
+      });
+    }
+  }
+}
+
+// Función para hacer solicitudes autenticadas
 export async function makeAuthenticatedRequest(url: string) {
   try {
     const response = await fetch(url, {
