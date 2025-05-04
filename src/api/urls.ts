@@ -31,7 +31,17 @@ export const USER_EMAIL_URL = validateUrl(
   import.meta.env.VITE_API_USER_EMAIL_URL,
   "VITE_API_USER_EMAIL_URL"
 );
+export const USER_LIST_ID = validateUrl(
+  import.meta.env.VITE_API_USER_LIST_ID,
+  "VITE_API_USER_LIST_ID"
+);
 
-if (!API_URL || !LOGIN_URL || !REGISTER_URL || !USER_EMAIL_URL) {
+if (
+  !API_URL ||
+  !LOGIN_URL ||
+  !REGISTER_URL ||
+  !USER_EMAIL_URL ||
+  !USER_LIST_ID
+) {
   throw new Error("Las URLs de la API no están configuradas correctamente.");
 }
