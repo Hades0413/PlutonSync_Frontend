@@ -7,7 +7,7 @@ export interface UserResponse {
   success: boolean;
   message?: string;
   user?: {
-    id: string;
+    id_usuario: string;
     email: string;
     username: string;
     // Cualquier otro campo de usuario
