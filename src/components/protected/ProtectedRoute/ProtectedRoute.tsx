@@ -1,14 +1,19 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
-  const user = JSON.parse(localStorage.getItem("user") || "null");
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
-  // Si no hay usuario logueado, redirigir al login
-  if (!user) {
+  useEffect(() => {
+    fetch("/auth/me", { credentials: "include" })
+      .then((res) => setIsAuthenticated(res.ok))
+      .catch(() => setIsAuthenticated(false));
+  }, []);
+
+  if (isAuthenticated === null) return <div>Cargando...</div>;
+
+  if (!isAuthenticated) {
     return <Navigate to="/" replace state={{ from: location }} />;
   }
 

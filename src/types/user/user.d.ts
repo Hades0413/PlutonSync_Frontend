@@ -1,26 +1,9 @@
-// src/types/auth/user.d.ts
-export interface User {
-  id: string;
-  username: string;
-  nombreCompleto: string;
-  email: string;
-  password: string;
-}
-export interface RegisterFormData {
-  username: string;
-  nombreCompleto: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+// src/types/user/user.d.ts
 
-export interface RegisterResponse {
-  success: boolean;
-  message?: string;
-  user?: {
-    id: string;
-    username: string;
-    email: string;
-    nombreCompleto: string;
-  };
+export interface User {
+  id_usuario: string;
+  username_usuario: string;
+  nombre_completo_usuario: string;
+  email_usuario: string;
+  password_usuario: string;
 }

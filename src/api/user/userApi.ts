@@ -38,11 +38,14 @@ export async function registerUser(
 }
 
 // Función para obtener datos del usuario por id
-export async function getUserById(id: number) {
+export async function getUserById(id: number, token: string) {
   try {
     const response = await fetch(`${USER_LIST_ID}/${id}`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
 
@@ -68,12 +71,13 @@ export async function getUserById(id: number) {
 }
 
 // Función para hacer solicitudes autenticadas
-export async function makeAuthenticatedRequest(url: string) {
+export async function makeAuthenticatedRequest(url: string, token: string) {
   try {
     const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       credentials: "include",
     });

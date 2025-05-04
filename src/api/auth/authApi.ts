@@ -1,9 +1,13 @@
-import { LOGIN_URL, USER_EMAIL_URL } from "../urls";
+import { LOGIN_URL, LOGOUT_URL } from "../urls";
+import { Auth } from "../../types/auth/auth.d";
 
 // Función para iniciar sesión
-export async function loginUser(email: string, password: string) {
+export async function loginUser(auth: Auth) {
   try {
-    const requestData = { email, password };
+    const requestData = {
+      email_usuario: auth.email_usuario,
+      password_usuario: auth.password_usuario,
+    };
 
     const response = await fetch(LOGIN_URL, {
       method: "POST",
@@ -42,43 +46,8 @@ export async function loginUser(email: string, password: string) {
       }
     }
 
-    const loginData = await response.json();
-    const { email: userEmail } = loginData.user;
-
-    const userResponse = await fetch(USER_EMAIL_URL, {
-      method: "GET",
-      credentials: "include",
-    });
-
-    if (!userResponse.ok) {
-      return {
-        success: false,
-        message: "Error al obtener información del usuario",
-      };
-    }
-
-    const userData = await userResponse.json();
-    const { id_usuario, username_usuario, nombre_completo_usuario } =
-      userData.user;
-
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        id_usuario,
-        username: username_usuario,
-        nombre_completo: nombre_completo_usuario,
-        email: userEmail,
-      })
-    );
-
     return {
       success: true,
-      user: {
-        id_usuario,
-        username: username_usuario,
-        nombre_completo: nombre_completo_usuario,
-        email: userEmail,
-      },
       message: "Inicio de sesión exitoso",
     };
   } catch {
@@ -92,7 +61,7 @@ export async function loginUser(email: string, password: string) {
 // Función para cerrar sesión
 export async function logoutUser() {
   try {
-    const response = await fetch("/auth/logout", {
+    const response = await fetch(LOGOUT_URL, {
       method: "POST",
       credentials: "include",
     });

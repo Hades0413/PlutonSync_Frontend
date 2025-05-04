@@ -23,6 +23,10 @@ export const LOGIN_URL = validateUrl(
   import.meta.env.VITE_API_LOGIN_URL,
   "VITE_API_LOGIN_URL"
 );
+export const LOGOUT_URL = validateUrl(
+  import.meta.env.VITE_API_LOGOUT_URL,
+  "VITE_API_LOGOUT_URL"
+);
 export const REGISTER_URL = validateUrl(
   import.meta.env.VITE_API_REGISTER_URL,
   "VITE_API_REGISTER_URL"

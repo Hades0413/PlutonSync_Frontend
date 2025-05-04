@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -19,10 +19,11 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onSidebarToggle }) => {
-  const [user, setUser] = useState<{ username: string; email: string } | null>(
-    null
-  );
-
+  const [user /*setUser*/] = useState<{
+    username: string;
+    email: string;
+  } | null>(null);
+  /*
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -31,10 +32,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onSidebarToggle }) => {
   }, []);
 
   const onLogout = () => {
-    localStorage.removeItem("user");
+    //localStorage.removeItem("user");
     window.location.href = "/";
   };
-
+  */
   return (
     <div className="relative">
       {/* Toggle */}
@@ -129,8 +130,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onSidebarToggle }) => {
               label="Mi Perfil"
               isOpen={isOpen}
             />
-            <button
-              onClick={onLogout}
+            <button /*
+              onClick={onLogout}*/
               className="flex items-center gap-3 text-red-500 hover:text-red-300 text-sm transition"
             >
               <LogOut className="w-5 h-5" />

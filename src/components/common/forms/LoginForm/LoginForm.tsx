@@ -7,8 +7,8 @@ import Swal from "sweetalert2";
 
 // Definir el esquema de validación usando Zod
 const loginSchema = z.object({
-  email: z.string().email("El correo electrónico no es válido"),
-  password: z
+  email_usuario: z.string().email("El correo electrónico no es válido"),
+  password_usuario: z
     .string()
     .min(12, "La contraseña debe tener al menos 12 caracteres")
     .regex(/[A-Z]/, "La contraseña debe contener al menos una mayúscula")
@@ -20,13 +20,11 @@ const loginSchema = z.object({
     ),
 });
 
-// El tipo `UserResponse` es el único necesario aquí.
-import { UserResponse } from "../../../../types/auth/auth";
 
 // Componente del formulario de Login
 const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [email_usuario, setEmailUsuario] = useState<string>("");
+  const [password_usuario, setPasswordUsuario] = useState<string>("");
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
@@ -35,14 +33,17 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
 
     // Validar con Zod
-    const validationResult = loginSchema.safeParse({ email, password });
+    const validationResult = loginSchema.safeParse({
+      email_usuario,
+      password_usuario,
+    });
 
     if (!validationResult.success) {
       // Si la validación falla, mostramos los errores
       const errorMessage = validationResult.error.format();
       setError(
-        errorMessage.email?._errors[0] ||
-          errorMessage.password?._errors[0] ||
+        errorMessage.email_usuario?._errors[0] ||
+          errorMessage.password_usuario?._errors[0] ||
           ""
       );
       return;
@@ -50,9 +51,12 @@ const LoginForm: React.FC = () => {
 
     try {
       // Hacer la llamada a la API de login
-      const response: UserResponse = await loginUser(email, password);
+      const response = await loginUser({
+        email_usuario,
+        password_usuario,
+      });
 
-      if (response?.success) {
+      if (response.success) {
         localStorage.setItem("user", JSON.stringify(response.user));
         navigate("/dashboard");
         Swal.fire({
@@ -61,11 +65,11 @@ const LoginForm: React.FC = () => {
           text: "Bienvenido al panel de control",
         });
       } else {
-        setError(response?.message || "Credenciales incorrectas.");
+        setError(response.message || "Credenciales incorrectas.");
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: response?.message || "Credenciales incorrectas.",
+          text: response.message || "Credenciales incorrectas.",
         });
       }
     } catch (err) {
@@ -98,7 +102,10 @@ const LoginForm: React.FC = () => {
         </h2>
 
         <div className="mb-6">
-          <label htmlFor="email" className="block text-sm font-semibold mb-1">
+          <label
+            htmlFor="email_usuario"
+            className="block text-sm font-semibold mb-1"
+          >
             Correo electrónico
           </label>
           <div className="relative">
@@ -107,9 +114,9 @@ const LoginForm: React.FC = () => {
             </span>
             <input
               type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              id="email_usuario"
+              value={email_usuario}
+              onChange={(e) => setEmailUsuario(e.target.value)}
               required
               className="w-full pl-10 pr-4 py-2 rounded-md bg-transparent border border-[var(--pluton-border)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--pluton-primary)]"
               placeholder="Ingresa tu correo"
@@ -119,7 +126,7 @@ const LoginForm: React.FC = () => {
 
         <div className="mb-6">
           <label
-            htmlFor="password"
+            htmlFor="password_usuario"
             className="block text-sm font-semibold mb-1"
           >
             Contraseña
@@ -130,9 +137,9 @@ const LoginForm: React.FC = () => {
             </span>
             <input
               type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              id="password_usuario"
+              value={password_usuario}
+              onChange={(e) => setPasswordUsuario(e.target.value)}
               required
               className="w-full pl-10 pr-4 py-2 rounded-md bg-transparent border border-[var(--pluton-border)] text-white focus:outline-none focus:ring-2 focus:ring-[var(--pluton-primary)]"
               placeholder="Ingresa tu contraseña"

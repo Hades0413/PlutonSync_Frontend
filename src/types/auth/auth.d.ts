@@ -1,15 +1,6 @@
-export interface AuthData {
-  email: string;
-  password: string;
-}
+// src/types/auth/auth.d.ts
 
-export interface UserResponse {
-  success: boolean;
-  message?: string;
-  user?: {
-    id_usuario: string;
-    email: string;
-    username: string;
-    // Cualquier otro campo de usuario
-  };
+export interface Auth {
+  email_usuario: string;
+  password_usuario: string;
 }
